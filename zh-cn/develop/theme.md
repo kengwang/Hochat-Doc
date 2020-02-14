@@ -53,6 +53,8 @@
 
 即可输出此变量
 
+注意!: 此方法仅支持输出一般类型变量,不支持输出类,数组等类型
+
 ### 循环语句
 
 循环语句可以帮您对评论区的数据有个方便的操作:
@@ -75,69 +77,30 @@
 <# endloop #>
 ```
 
-## 示例文件
+### 判断语句 (试验性)
 
-```html
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>HoChat</title>
-    <link rel="stylesheet" href="https://cdn.hochat.space/theme/default/css/main.css">
-</head>
-<body>
+我们还支持一般的判断语句,比如你要判断 变量`varable`是否等于`1`
 
-<div style="height: 50px;"></div>
-
-
-<!-- HoChat! -->
-<!-- Base Example -->
-<div class="hochat">
-    <div class="hochat-login">
-        <div class="hochat-login-title">发表评论</div>
-        <form>
-            <div class="hochat-login-input-group">
-                <div class="hochat-login-input">
-                    <label>昵称(必填)</label>
-                    <input placeholder="输入您的昵称" type="text">
-                </div>
-
-                <div class="hochat-login-input">
-                    <label>邮件(必填)</label>
-                    <input placeholder="请输入您的邮箱地址" type="text">
-                </div>
-
-                <div class="hochat-login-input">
-                    <label>网址</label>
-                    <input placeholder="输入您的网站地址" type="text">
-                </div>
-            </div>
-            <textarea placeholder="什么叫鸡巴话，都在这里说吧~" rows="3"></textarea>
-            <button>发射</button>
-        </form>
-
-    </div>
-	<# loop comments as comment #>
-    <div class="ho-chat">
-        <img src="https://cdn.v2ex.com/gravatar/<%=comment.mailmd5=%>">
-        <div class="ho-content">
-            <div class="ho-name"><%=comment.username=%></div>
-            <div class="ho-info"><%=comment.website=%></div>
-            <div class="ho-msg">
-                <%=comment.comment=%>
-                <div class="ho-time"><%=comment.time=%></div>
-            </div>
-        </div>
-    </div>
-    <# endloop #>
-</div>
-<!-- Base Example -->
-<script>
-    window.addEventListener('load', function () {
-        window.parent.postMessage(document.body.offsetHeight, "*");
-    });
-</script>
-</body>
-</html>
+```
+<# if varable == '1' #>
 ```
 
+特别的,右侧假如为指定的量,必须要加上引号,否则将会视其为变量
+
+当然,这仅是冰山一角,我们仍在不断地完善当中......
+
+## 变量列表
+
+| 变量名           | 变量说明                   | 备注                               |
+| ---------------- | -------------------------- | ---------------------------------- |
+| site             | 网站地址                   | SITE为完整网站                     |
+| link             | 当前完整路径               |                                    |
+| name             | 在Console中指定的站点名称  |                                    |
+| comments         | 评论数组                   | 需要用loop来拆分开                 |
+| comment.username | 评论发送者的名称           | 请先将comment给loop出来            |
+| comment.mailmd5  | 邮箱的MD5,用来获取gravatar | 该变量可能会在之后版本废弃         |
+| comment.website  | 评论者留下的网址           |                                    |
+| comment.comment  | 评论内容                   | 可能会包含HTNL代码,后台已经防止XSS |
+| comment.time     | 评论时间                   | 2020-02-14 13:35:38 (格式)         |
+
+如有建议,欢迎联系 [atkengwang@qq.com](mailto:atkengwang@qq.com)
